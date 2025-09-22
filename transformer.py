@@ -115,9 +115,13 @@ class Decoder(nn.Module):
     def __init__(self, layer, N):
         """Construct a decoder module.
 
-            layer:  
+            layer: A layer in the decoder.
+            N: The number of identical layers to use in the decoder.
         """
         pass
 
     def forward(self, x):
         pass
+
+class DecoderLayer(nn.Module):
+    """"""
