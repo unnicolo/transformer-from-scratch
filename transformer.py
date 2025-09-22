@@ -55,11 +55,12 @@ class LayerNorm(nn.Module):
         return (self.a_2 * (x - mean)) / (std + eps) + self.b_2
 
     class Encoder(nn.Module):
-    def __init(self, layer, N):
+    def __init__(self, layer, N):
         """Construct an Encoder unit of the transformer which is a stack of N layers.
 
         Args:
-        N: The number of EncoderLayer clones in the transformer architecture.
+            layer: A single layer of the encoder.
+            N: The number of EncoderLayer clones in the transformer architecture.
         """
         super(Encoder, self).__init__()
         self.layers = clones(layer, N)
@@ -72,14 +73,14 @@ class LayerNorm(nn.Module):
         return self.norm(x)
 
 class EncoderLayer(nn.Module):
-    def __init(self, self_attn, feed_forward, size, dropout):
+    def __init__(self, self_attn, feed_forward, size, dropout):
         """Construct a layer of the encoder.
 
         Args:
-        self_attn: Self-attention mechanism.
-        feed_forwards: A feed-forward network to learn connections.
-        size: The number of output features of the encoder layer.
-        dropout: Dropout probability.
+            self_attn: Self-attention mechanism.
+            feed_forwards: A feed-forward network to learn connections.
+            size: The number of output features of the encoder layer.
+            dropout: Dropout probability.
         """
         super(EncoderLayer, self).__init__()
         self.self_attn = self_attn
@@ -101,10 +102,22 @@ class SublayerConnection(nn.Module):
         """Apply a residual connection and use pre layer normalization (for code simplicity)
 
         Args:
-        x: The input to the layer.
-        sublayer: The layer through which to the pass the input.
+            x: The input to the layer.
+            sublayer: The layer through which to the pass the input.
 
         Returns:
-        The output value of the layer.
+            The output value of the layer.
         """
         return x + self.dropout(x + sublayer(norm(x)))
+
+class Decoder(nn.Module):
+    """Decoder in the decoder stack consisting of `N` identical decoder modules."""
+    def __init__(self, layer, N):
+        """Construct a decoder module.
+
+            layer:  
+        """
+        pass
+
+    def forward(self, x):
+        pass
