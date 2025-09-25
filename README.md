@@ -1,7 +1,6 @@
 # Implementing a Transformer From Scratch with PyTorch  
-> A low-level exploration of modern NLP architectures
 
-A practical deep learning portfolio project focused on building a **Transformer** model from scratch using **PyTorch**, without relying on high-level libraries like `torch.nn.Transformer`. The project is designed to deepen theoretical understanding through hands-on implementation of attention mechanisms, positional encoding, and encoder-decoder architecture.
+A practical deep learning project focused on building a **Transformer** model from scratch using **PyTorch**, without relying on high-level libraries like `torch.nn.Transformer`. The project is designed to deepen theoretical understanding through hands-on implementation of attention mechanisms, positional encoding, and encoder-decoder architecture.
 
 ---
 
