@@ -2,8 +2,6 @@
 
 A practical deep learning project focused on building a **Transformer** model from scratch using **PyTorch**, without relying on high-level libraries like `torch.nn.Transformer`. The project is designed to deepen theoretical understanding through hands-on implementation of attention mechanisms, positional encoding, and encoder-decoder architecture.
 
----
-
 ## 🔧 Technologies Used
 
 - **Language:** Python 3.12.0 
@@ -16,8 +14,6 @@ A practical deep learning project focused on building a **Transformer** model fr
   - Positional Encoding  
   - Masking Techniques  
   - Encoder-Decoder Architecture  
-
----
 
 ### 📁 Project Structure
 
@@ -35,8 +31,6 @@ transformer-from-scratch/
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Project documentation
 ```
-
----
 
 ## Licensing
 
