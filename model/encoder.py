@@ -8,6 +8,8 @@ decoder.py: Implementation of a decoder module, as described in `The annotated t
 ### Imports ###
 
 import torch.nn as nn
+from model.layers import LayerNorm, SublayerConnection
+from utils import clones
 
 class Encoder(nn.Module):
     def __init__(self, layer, N):
@@ -24,7 +26,7 @@ class Encoder(nn.Module):
     def forward(self, x, mask):
         """Pass the input (and mask) through each layer and norm the final result."""
         for layer in self.layers:
-        x = layer(x, mask)
+            x = layer(x, mask)
         return self.norm(x)
 
 class EncoderLayer(nn.Module):

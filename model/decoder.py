@@ -8,6 +8,8 @@ decoder.py: Implementation of a decoder module, as described in `The annotated t
 ### Imports ###
 
 import torch.nn as nn
+from model.layers import LayerNorm, SublayerConnection
+from utils import clones
 
 class Decoder(nn.Module):
     """Decoder in the decoder stack consisting of `N` identical decoder modules."""
@@ -22,20 +24,20 @@ class Decoder(nn.Module):
         self.layers = clones(layer, N)
         self.norm = LayerNorm(layer.size)
 
-    def forward(self, x, memory, src_mask, target_mask):
+    def forward(self, x, memory, src_mask, tgt_mask):
         """Pass the input through the decoder module.
         
         Args:
             x:
             memory:
             src_mask:
-            target_mask:
+            tgt_mask:
         
         Returns:
             The tensor obtained by passing the input through the decoder module.
         """
         for layer in self.layers:
-            x = layer(x, mask)
+            x = layer(x, tgt_mask)
         return self.norm(x)
 
 class DecoderLayer(nn.Module):
