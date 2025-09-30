@@ -57,3 +57,19 @@ class LayerNorm(nn.Module):
         std = x.std(-1, keepdim=True)
 
         return (self.a_2 * (x - mean)) / (std + self.eps) + self.b_2
+    
+class PositionWiseFeedForward(nn.Module):
+    def __init__(self, d_model, d_ff, dropout=0.1):
+        """Construct a PositionWise feed-forward module which implements the FF equation.
+
+        Args:
+            d_model: The model input dimension size.
+            d_ff: The inner-layer dimensionality.
+        """
+        super(PositionWiseFeedForward, self).__init__()
+        self.linear_1 = nn.Linear(d_model, d_ff)
+        self.linear_2 = nn.Linear(d_ff, d_model)
+        self.dropout = nn.Dropout(p=dropout) 
+
+    def forward(self, x):
+        return self.linear_2(self.linear1(x).relu())
