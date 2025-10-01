@@ -27,13 +27,12 @@ transformer-from-scratch/
 │   ├── transformer.py         # (Planned) Full model integration
 │   ├── feed_forward.py        # Position-wise feed-forward network
 │   ├── embeddings.py          # (Planned) Token and positional embeddings
-|   |── embeddings.py          # (Planned) Token and positional embeddings
 |   └── utils.py               # Helper functions, masking, cloning etc 
 |
 ├── main.py                    # (Planned) Sample forward pass & debugging
 ├── train.py                   # (Planned) Training loop
 ├── inference.py               # (Planned) Inference script
-├── utils.py                   # Helper functions (e.g. masking, tokenization)
+├── utils.py                   # (Planned) Helper functions (e.g. masking, tokenization)
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Project documentation
 ```
