@@ -20,10 +20,16 @@ A practical deep learning project focused on building a **Transformer** model fr
 ```plaintext
 transformer-from-scratch/
 ├── models/
+│   ├── __init__.py           
 │   ├── attention.py           # (Planned) Scaled dot-product & multi-head attention
 │   ├── encoder.py             # Transformer encoder block
 │   ├── decoder.py             # Transformer decoder block
-│   └── transformer.py         # (Planned) Full model integration
+│   ├── transformer.py         # (Planned) Full model integration
+│   ├── feed_forward.py        # Position-wise feed-forward network
+│   ├── embeddings.py          # (Planned) Token and positional embeddings
+|   |── embeddings.py          # (Planned) Token and positional embeddings
+|   └── utils.py               # Helper functions, masking, cloning etc 
+|
 ├── main.py                    # (Planned) Sample forward pass & debugging
 ├── train.py                   # (Planned) Training loop
 ├── inference.py               # (Planned) Inference script
