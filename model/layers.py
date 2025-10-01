@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-decoder.py: Implementation of a decoder module, as described in `The annotated transformer.`
+layers.py: Implementation of a various layer modules used in the encoder and decoder architecture, as described in `The annotated transformer.`
 """
 
 ### Imports ###
