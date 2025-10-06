@@ -8,7 +8,7 @@ attention.py: Implementation of scaled dot-product attention and multi-head atte
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils import clones
+from model.utils import clones
 import math
 
 MASK_FILL_VALUE = -1e9
@@ -76,5 +76,9 @@ class MultiHeadAttention(nn.Module):
         # h x d_k => d_model
         x = x.transpose(1, 2).contiguous() \
              .view(num_batches, -1, self.h * self.d_model)
+        
+        del query
+        del key
+        del value
         
         return self.linears[-1](x)
