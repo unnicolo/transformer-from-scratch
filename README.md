@@ -24,6 +24,7 @@ transformer-from-scratch/
 │   ├── attention.py           # (Planned) Scaled dot-product & multi-head attention
 │   ├── encoder.py             # Transformer encoder block
 │   ├── decoder.py             # Transformer decoder block
+│   ├── generator.py           # Linear layer + softmax output probabilities generation step.
 │   ├── transformer.py         # (Planned) Full model integration
 │   ├── feed_forward.py        # Position-wise feed-forward network
 │   ├── embeddings.py          # (Planned) Token and positional embeddings
