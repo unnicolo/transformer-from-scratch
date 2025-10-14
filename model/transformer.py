@@ -53,7 +53,7 @@ class Transformer(nn.Module):
         attn = MultiHeadAttention(num_heads, d_model, dropout)
         position = PositionalEncoding(d_model, dropout)
         self.src_embedding = nn.Sequential(Embeddings(d_model, src_vocab), c(position))
-        self.tgt_embedding = nn.Sequential(Embeddings(d_model, tgt_vocab) c(position))
+        self.tgt_embedding = nn.Sequential(Embeddings(d_model, tgt_vocab), c(position))
         self.encoder = Encoder(EncoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
         self.decoder = Decoder(DecoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
 
