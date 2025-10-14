@@ -57,5 +57,39 @@ class Transformer(nn.Module):
         self.encoder = Encoder(EncoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
         self.decoder = Decoder(DecoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
 
-    def forward(self, x):
+    def forward(self, src, tgt, src_mask, tgt_mask):
+        """Push the inputs through the entire encoder and decoder stack.
+        
+        Args:
+            src: The source input.
+            tgt: The target input.
+            src_mask: The mask applied to the source input.
+            tgt_mask: The mask applied to the target input.
+        """
+        pass
+
+    def encode(self, src, src_mask):
+        """Push the input through the encoder.
+        
+        Args:
+            src: The input to the encoder.
+            src_mask: The mask applied to the input.
+        
+        Returns:
+            The encoded input.
+        """
+        pass
+
+    def decode(self, memory, src_mask, tgt, tgt_mask):
+        """Description here.
+        
+        Args:
+            memory: The encoded source input.
+            src_mask: The mask applied to the source input.
+            tgt: The target input.
+            tgt_mask: The mask applied to the target input.
+
+        Returns:
+            The result after passing the input through the encoder and decoder stacks.
+        """
         pass
