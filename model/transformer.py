@@ -41,7 +41,12 @@ class Transformer(nn.Module):
         """Construct a transformer.
         
         Args:
-            xyz: Id ipsum.
+            d_model: The model embedding dimension.
+            d_ff: The dimension of the position-wise feed-forward neural network.
+            num_heads: The number of parallel attention heads.
+            dropout: Dropout probability used.
+            src_vocab: Size of the source vocabulary used.
+            tgt_vocab: Size of the target vocabulary used.
         """
         c = copy.deepcopy
         ff = PositionWiseFeedForward(d_model, d_ff, dropout)
