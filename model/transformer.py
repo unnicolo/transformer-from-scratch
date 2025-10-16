@@ -18,6 +18,7 @@ from model.decoder import DecoderLayer, Decoder
 from model.embeddings import Embeddings, PositionalEncoding
 from model.encoder import EncoderLayer, Encoder
 from model.feed_forward import PositionWiseFeedForward
+from model.generator import Generator
 
 ### Constants ###
 DROPOUT = 0.1
@@ -57,6 +58,7 @@ class Transformer(nn.Module):
         self.tgt_embedding = nn.Sequential(Embeddings(d_model, tgt_vocab), c(position))
         self.encoder = Encoder(EncoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
         self.decoder = Decoder(DecoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
+        self.generator = Generator(d_model, tgt_vocab)
 
     def forward(self, src, tgt, src_mask, tgt_mask):
         """Push the inputs through the entire encoder and decoder stack.
@@ -67,7 +69,8 @@ class Transformer(nn.Module):
             src_mask: The mask applied to the source input.
             tgt_mask: The mask applied to the target input.
         """
-        pass
+        memory = self.encode(src, src_mask)
+        return self.decode(memory, src_mask, self.tgt_embedding(tgt), tgt_mask)
 
     def encode(self, src, src_mask):
         """Push the input through the encoder.
@@ -79,7 +82,7 @@ class Transformer(nn.Module):
         Returns:
             The encoded input.
         """
-        pass
+        return self.encoder(self.src_embedding(src), src_mask)
 
     def decode(self, memory, src_mask, tgt, tgt_mask):
         """Description here.
@@ -93,4 +96,15 @@ class Transformer(nn.Module):
         Returns:
             The result after passing the input through the encoder and decoder stacks.
         """
-        pass
+        return self.decoder(self.tgt_embedding(tgt), memory, src_mask, tgt_mask)
+
+    def generate(self, x):
+        """Generate output probabilities from decoder output.
+
+        Args:
+            x: The input to the generator, i.e. the decoder output.
+
+        Returns:
+            Tensor: Output probability for each word in the tgt_vocabulary.
+        """
+        return self.generator(x)
