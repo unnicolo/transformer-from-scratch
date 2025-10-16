@@ -9,7 +9,7 @@ decoder.py: Implementation of a decoder module, as described in `The annotated t
 
 import torch.nn as nn
 from model.layers import LayerNorm, SublayerConnection
-from utils import clones
+from model.utils import clones
 
 class Decoder(nn.Module):
     """Decoder in the decoder stack consisting of `N` identical decoder modules."""
@@ -51,9 +51,11 @@ class DecoderLayer(nn.Module):
             size: The number of output features of the transformer.
             dropout: Dropout probability at each layer.
         """
+        super(DecoderLayer, self).__init__()
         self.self_attn = self_attn
         self.feed_forward = feed_forward
         self.sublayer_cnnts = clones(SublayerConnection(size, dropout), 3)
+        self.size = size
     
     def forward(self, x, memory, src_mask, tgt_mask):
         """Pass the input (and the mask) through each layer and norm the result.

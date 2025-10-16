@@ -13,11 +13,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from attention import MultiHeadAttention
-from decoder import DecoderLayer, Decoder
-from embeddings import Embeddings, PositionalEncoding
-from encoder import EncoderLayer, Encoder
-from feed_forward import PositionWiseFeedForward
+from model.attention import MultiHeadAttention
+from model.decoder import DecoderLayer, Decoder
+from model.embeddings import Embeddings, PositionalEncoding
+from model.encoder import EncoderLayer, Encoder
+from model.feed_forward import PositionWiseFeedForward
 
 ### Constants ###
 DROPOUT = 0.1
@@ -48,6 +48,7 @@ class Transformer(nn.Module):
             src_vocab: Size of the source vocabulary used.
             tgt_vocab: Size of the target vocabulary used.
         """
+        super(Transformer, self).__init__()
         c = copy.deepcopy
         ff = PositionWiseFeedForward(d_model, d_ff, dropout)
         attn = MultiHeadAttention(num_heads, d_model, dropout)

@@ -9,7 +9,7 @@ decoder.py: Implementation of a decoder module, as described in `The annotated t
 
 import torch.nn as nn
 from model.layers import LayerNorm, SublayerConnection
-from utils import clones
+from model.utils import clones
 
 class Encoder(nn.Module):
     def __init__(self, layer, N):
@@ -43,6 +43,7 @@ class EncoderLayer(nn.Module):
         self.self_attn = self_attn
         self.feed_forward = feed_forward
         self.sublayer_cnnts = clones(SublayerConnection(size, dropout), 2)
+        self.size = size
 
     def forward(self, x, mask):
         x = self.sublayer_cnnts[0](x, lambda x: self.self_attn(x, x, x, mask))
