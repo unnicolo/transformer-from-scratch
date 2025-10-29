@@ -21,19 +21,19 @@ A practical deep learning project focused on building a **Transformer** model fr
 transformer-from-scratch/
 ├── models/
 │   ├── __init__.py           
-│   ├── attention.py           # (Planned) Scaled dot-product & multi-head attention
+│   ├── attention.py           # Scaled dot-product & multi-head attention
 │   ├── encoder.py             # Transformer encoder block
 │   ├── decoder.py             # Transformer decoder block
 │   ├── generator.py           # Linear layer + softmax output probabilities generation step.
-│   ├── transformer.py         # (Planned) Full model integration
+│   ├── transformer.py         # Full model integration
 │   ├── feed_forward.py        # Position-wise feed-forward network
-│   ├── embeddings.py          # (Planned) Token and positional embeddings
+│   ├── embeddings.py          # Token and positional embeddings
 |   └── utils.py               # Helper functions, masking, cloning etc 
 |
-├── main.py                    # (Planned) Sample forward pass & debugging
-├── train.py                   # (Planned) Training loop
-├── inference.py               # (Planned) Inference script
-├── utils.py                   # (Planned) Helper functions (e.g. masking, tokenization)
+├── main.py                    # Sample forward pass & debugging
+├── train.py                   # Training loop
+├── inference.py               # Inference script
+├── utils.py                   # Helper functions (e.g. masking, tokenization)
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Project documentation
 ```
