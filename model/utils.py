@@ -32,6 +32,6 @@ def subsequent_mask(size):
         The mask preventing leftward information flow, with zeros above the main diagonal and ones everywhere else.
     """
     attn_shape = (1, size, size)
-    subsequent_mask = np.triu(np.ones(attn_shape), k=1).astype('uint8')
+    subsequent_mask = torch.triu(torch.ones(attn_shape), diagonal=1).type(torch.uint8)
 
-    return torch.from_numpy(subsequent_mask) == 0
+    return subsequent_mask == 0

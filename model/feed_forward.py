@@ -24,4 +24,4 @@ class PositionWiseFeedForward(nn.Module):
         self.dropout = nn.Dropout(p=dropout) 
 
     def forward(self, x):
-        return self.linear_2(self.linear1(x).relu())
+        return self.linear_2(self.linear_1(x).relu())

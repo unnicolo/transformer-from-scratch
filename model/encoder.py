@@ -46,5 +46,6 @@ class EncoderLayer(nn.Module):
         self.size = size
 
     def forward(self, x, mask):
+        #print(f'x.shape is {x.shape}')
         x = self.sublayer_cnnts[0](x, lambda x: self.self_attn(x, x, x, mask))
-        return self.sublayer_cnnts[1](x, lambda x: self.feed_forward)
+        return self.sublayer_cnnts[1](x, self.feed_forward)

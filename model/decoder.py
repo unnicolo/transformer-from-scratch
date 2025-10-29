@@ -37,12 +37,12 @@ class Decoder(nn.Module):
             The tensor obtained by passing the input through the decoder module.
         """
         for layer in self.layers:
-            x = layer(x, tgt_mask)
+            x = layer(x, memory, src_mask, tgt_mask)
         return self.norm(x)
 
 class DecoderLayer(nn.Module):
     """A layer in the decoder stack, consisting of two attention blocks and a feed-forward neural network."""
-    def __init__(self, self_attn, feed_forward, size, dropout):
+    def __init__(self, self_attn, src_attn, feed_forward, size, dropout):
         """Construct a decoder layer.
         
         Args:
@@ -53,6 +53,7 @@ class DecoderLayer(nn.Module):
         """
         super(DecoderLayer, self).__init__()
         self.self_attn = self_attn
+        self.src_attn = src_attn
         self.feed_forward = feed_forward
         self.sublayer_cnnts = clones(SublayerConnection(size, dropout), 3)
         self.size = size
@@ -70,5 +71,5 @@ class DecoderLayer(nn.Module):
         """
         m = memory
         x = self.sublayer_cnnts[0](x, lambda x: self.self_attn(x, x, x, tgt_mask))
-        x = self.sublayer_cnnts[1](x, lambda x: self.self_attn(m, m, x, src_mask))
+        x = self.sublayer_cnnts[1](x, lambda x: self.src_attn(x, m, m, src_mask))
         return self.sublayer_cnnts[2](x, self.feed_forward)

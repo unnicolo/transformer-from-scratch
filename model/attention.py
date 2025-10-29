@@ -15,15 +15,20 @@ MASK_FILL_VALUE = -1e9
 
 def attention(query, key, value, mask=None, dropout=None):
     """Compute scaled dot-product attention."""
+    #print(f'query size is {query.shape}')
+    #print(f'key size is {key.shape}')
+    #print(f'value size is {value.shape} attn_ftc')
     keyspace_dim = key.size(-1)
     scale_factor = 1 / (math.sqrt(keyspace_dim))
     scores = torch.matmul(query, key.transpose(-2, -1)) * scale_factor
     if mask is not None:
         scores = scores.masked_fill(mask == 0, MASK_FILL_VALUE)
-    attn_logits = F.softmax(scores, dim = -1)
+    attn = F.softmax(scores, dim = -1)
     if dropout is not None:
-        attn_logits = dropout(attn_logits)
-    return torch.matmul(attn_logits, value), attn_logits
+        attn = dropout(attn)
+    #print(f'attn size is {attn.size()}')
+    #print(f'value size is {value.size()}')
+    return torch.matmul(attn, value), attn
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, h, d_model, dropout=0.1):
@@ -61,7 +66,7 @@ class MultiHeadAttention(nn.Module):
         """
         if mask is not None:
             # Insert extra dimension to account for batch_size dimension
-            mask = torch.unsqueeze(mask, 1)
+            mask = mask.unsqueeze(1)
         num_batches = query.size(0)
       
         # Step 1: Do batched linear projections, d_model => h x d_k
@@ -75,7 +80,7 @@ class MultiHeadAttention(nn.Module):
         # Step 3: Concat the tensors using a view and apply the final linear layer.
         # h x d_k => d_model
         x = x.transpose(1, 2).contiguous() \
-             .view(num_batches, -1, self.h * self.d_model)
+             .view(num_batches, -1, self.h * self.d_k)
         
         del query
         del key

@@ -57,7 +57,7 @@ class Transformer(nn.Module):
         self.src_embedding = nn.Sequential(Embeddings(d_model, src_vocab), c(position))
         self.tgt_embedding = nn.Sequential(Embeddings(d_model, tgt_vocab), c(position))
         self.encoder = Encoder(EncoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
-        self.decoder = Decoder(DecoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
+        self.decoder = Decoder(DecoderLayer(c(attn), c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
         self.generator = Generator(d_model, tgt_vocab)
 
     def forward(self, src, tgt, src_mask, tgt_mask):
@@ -69,8 +69,9 @@ class Transformer(nn.Module):
             src_mask: The mask applied to the source input.
             tgt_mask: The mask applied to the target input.
         """
+        #print(src.size())
         memory = self.encode(src, src_mask)
-        return self.decode(memory, src_mask, self.tgt_embedding(tgt), tgt_mask)
+        return self.decode(memory, src_mask, tgt, tgt_mask)
 
     def encode(self, src, src_mask):
         """Push the input through the encoder.
