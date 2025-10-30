@@ -19,21 +19,32 @@ A practical deep learning project focused on building a **Transformer** model fr
 
 ```plaintext
 transformer-from-scratch/
+|
+├── data/
+│   ├── __init__.py           
+│   ├── batch.py               # Holds a batch training data
+│   ├── synthetic_data.py      # Generation of synthetic training data
+|
 ├── models/
 │   ├── __init__.py           
 │   ├── attention.py           # Scaled dot-product & multi-head attention
 │   ├── encoder.py             # Transformer encoder block
 │   ├── decoder.py             # Transformer decoder block
-│   ├── generator.py           # Linear layer + softmax output probabilities generation step.
+│   ├── generator.py           # Linear layer + softmax output probabilities generation step
 │   ├── transformer.py         # Full model integration
 │   ├── feed_forward.py        # Position-wise feed-forward network
 │   ├── embeddings.py          # Token and positional embeddings
 |   └── utils.py               # Helper functions, masking, cloning etc 
 |
+├── train/                     # (Planned) Model training
+│   ├── __init__.py           
+│   ├── loss.py                # (Planned) Loss computation
+│   ├── optimizer.py           # (Planned) Implementation of the NoamOptimizer
+│   ├── state.py               # (Planned) TrainState dataclass
+│   ├── train.py               # (Planned) Training loop
+|
 ├── main.py                    # Sample forward pass & debugging
-├── train.py                   # Training loop
-├── inference.py               # Inference script
-├── utils.py                   # Helper functions (e.g. masking, tokenization)
+├── inference.py               # (Planned) Inference script
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Project documentation
 ```
