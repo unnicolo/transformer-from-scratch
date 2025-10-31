@@ -2,8 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 """
-batch.py: Defines the Batch class for storing source and target sentences
-and constructing the corresponding attention masks.
+synthetic_data.py: Generation of random synthetic training data for training purposes.
 """
 
 ### IMPORTS ###
