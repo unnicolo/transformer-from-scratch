@@ -44,7 +44,7 @@ def run_epoch(
         train_state: The current state of the training process
     
     Returns:
-        (Tuple): The overall loss and the final train state.
+        Tuple: The overall loss and the final train state.
     """
 
     start_time = time.time()
