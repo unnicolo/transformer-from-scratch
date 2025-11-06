@@ -39,9 +39,9 @@ transformer-from-scratch/
 ├── train/                     # (Planned) Model training
 │   ├── __init__.py           
 │   ├── loss.py                # (Planned) Loss computation
-│   ├── rate.py                # (Planned) Implementation of the NoamOptimizer, adjusting the learning rate.
-│   ├── state.py               # (Planned) TrainState dataclass
-│   ├── train.py               # (Planned) Training loop
+│   ├── rate.py                # Implementation of the NoamOptimizer, adjusting the learning rate.
+│   ├── state.py               # TrainState dataclass
+│   ├── train.py               # Training loop
 |
 ├── main.py                    # Sample forward pass & debugging
 ├── inference.py               # (Planned) Inference script
