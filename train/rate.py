@@ -23,5 +23,5 @@ def rate(step: int, model_dim: int, factor: float, warmup_steps: int):
         step = 1
     
     return factor * (
-        model_dim ** (-0.5) * min(step ** (-0.5), step * warmup_steps ** (-0.5))
+        model_dim ** (-0.5) * min(step ** (-0.5), step * warmup_steps ** (-1.5))
     )
