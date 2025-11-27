@@ -36,12 +36,13 @@ transformer-from-scratch/
 │   ├── embeddings.py          # Token and positional embeddings
 |   └── utils.py               # Helper functions, masking, cloning etc 
 |
-├── train/                     # (Planned) Model training
+├── train/                     # Model training
 │   ├── __init__.py           
-│   ├── loss.py                # (Planned) Loss computation
-│   ├── rate.py                # Implementation of the NoamOptimizer, adjusting the learning rate.
+│   ├── decode.py              # Various decoding methods - just greedy decoding, fow now
+│   ├── loss.py                # Loss computation
+│   ├── rate.py                # Implementation of the NoamOptimizer, adjusting the learning rate
 │   ├── state.py               # TrainState dataclass
-│   ├── train.py               # Training loop
+|   └── train.py               # Training loop
 |
 ├── main.py                    # Sample forward pass & debugging
 ├── inference.py               # (Planned) Inference script
