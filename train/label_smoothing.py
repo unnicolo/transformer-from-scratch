@@ -48,4 +48,4 @@ class LabelSmoothing(nn.Module):
         if mask.dim() > 0:
             true_dist.index_fill_(0, mask.squeeze(), 0.0)
         self.true_dist = true_dist
-        return self.criterion(x, true_dist.clone.detach())
+        return self.criterion(x, true_dist.clone().detach())
