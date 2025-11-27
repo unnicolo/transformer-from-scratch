@@ -7,12 +7,18 @@
 ### IMPORTS ###
 import torch
 import torch.nn as nn
+from torch.optim.lr_scheduler import LambdaLR
 
 from model.transformer import Transformer
 from model.utils import subsequent_mask
 
+from train.label_smoothing import LabelSmoothing
+from train.rate import rate
+
 ### CONSTANTS ###
 NUM_TESTS = 100
+PADDING_IDX = 0
+VOCAB_SIZE = 11
 
 def make_model(
     src_vocab, 
@@ -35,7 +41,7 @@ def make_model(
 
 def inference_test():
     ### In the following: We try to make the model memorize the numbers from 1 to 10 ###
-    test_model = make_model(11, 11, 2)
+    test_model = make_model(VOCAB_SIZE, VOCAB_SIZE, 2)
     test_model.eval()
 
     src = torch.LongTensor([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]])
@@ -57,6 +63,20 @@ def inference_test():
         ys = torch.cat([ys, next_token], dim=1)
 
     print(f'Untrained example model prediction: {ys}')
+
+def example_simple_model():
+    criterion = LabelSmoothing(VOCAB_SIZE, PADDING_IDX, smoothing=0.0)
+    model = make_model(VOCAB_SIZE, VOCAB_SIZE, N=2)
+
+    optimizer = torch.optim.Adam(
+        model.parameters, lr=0.5, betas=(0.9, 0.98), eps=1e-9
+    )
+    lr_scheduler = LambdaLR(
+        optimizer=optimizer,
+        lr_lambda=lambda step: rate(
+            step, 
+        )
+    )
 
 def run_tests():
     for _ in range(NUM_TESTS):
