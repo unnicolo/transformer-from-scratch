@@ -77,4 +77,4 @@ def example_learning_schedule():
 
 if __name__ == '__main__':
     chart = example_learning_schedule()
-    chart.save("Chart.html")
+    chart.save("learning_schedule_chart.html")
