@@ -33,20 +33,20 @@ transformer-from-scratch/
 │   ├── generator.py           # Linear layer + softmax output probabilities generation step
 │   ├── transformer.py         # Full model integration
 │   ├── feed_forward.py        # Position-wise feed-forward network
-│   ├── embeddings.py          # Token and positional embeddings
-|   └── utils.py               # Helper functions, masking, cloning etc 
+|   └── embddings.py           # Token and positional embeddings
 |
 ├── train/                     # Model training
 │   ├── __init__.py           
 │   ├── decode.py              # Various decoding methods - just greedy decoding, fow now
+│   ├── label_smoothing.py     # Label smoothing to avoid overfitting and overconfidence
 │   ├── loss.py                # Loss computation
 │   ├── rate.py                # Implementation of the NoamOptimizer, adjusting the learning rate
 │   ├── state.py               # TrainState dataclass
 |   └── train.py               # Training loop
 |
 ├── main.py                    # Sample forward pass & debugging
-├── inference.py               # (Planned) Inference script
 ├── requirements.txt           # Python dependencies
+├── utils.py                   # Helper classes and functions
 └── README.md                  # Project documentation
 ```
 
