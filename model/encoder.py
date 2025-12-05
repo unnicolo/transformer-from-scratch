@@ -8,7 +8,7 @@ decoder.py: Implementation of a decoder module, as described in `The annotated t
 
 import torch.nn as nn
 from model.layers import LayerNorm, SublayerConnection
-from model.utils import clones
+from utils import clones
 
 class Encoder(nn.Module):
     def __init__(self, layer, N):

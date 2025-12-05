@@ -61,7 +61,7 @@ def run_epoch(
         )
 
         # Step 3: Compute the loss
-        loss, loss_node = loss_compute(out, batch.tgt_y, batch.num_tokens)
+        loss, loss_node = loss_compute(out, batch.tgt_y, batch.ntokens)
 
         if mode == MODE_TRAIN or mode == MODE_TRAIN_AND_LOG:
             # Step 4: Backpropagate the gradients
@@ -92,6 +92,7 @@ def run_epoch(
                 % (i, num_accumulated, (loss / batch.ntokens), (tokens / elapsed_time), lr)
             )
             start_time = time.time()
-            del loss
-            del loss_node
-        return (total_loss / total_tokens), train_state
+            tokens = 0
+        del loss
+        del loss_node
+    return (total_loss / total_tokens), train_state

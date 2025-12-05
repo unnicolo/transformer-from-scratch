@@ -8,8 +8,9 @@ attention.py: Implementation of scaled dot-product attention and multi-head atte
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from model.utils import clones
 import math
+
+from utils import clones
 
 MASK_FILL_VALUE = -1e9
 

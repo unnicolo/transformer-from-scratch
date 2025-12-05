@@ -8,7 +8,7 @@ and constructing the corresponding attention masks.
 
 ### Imports ###
 import torch
-from model.utils import subsequent_mask
+from utils import subsequent_mask
 
 class Batch:
     """Implements the Batch class, objects of which hold on to a batch of training data, along with the corresponding attention masks."""

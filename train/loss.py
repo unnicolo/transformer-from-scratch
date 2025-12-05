@@ -18,6 +18,7 @@ class SimpleLossCompute(nn.Module):
             generator: Probability output generator.
             criterion: Loss criterion.
         """
+        super(SimpleLossCompute, self).__init__()
         self.generator = generator
         self.criterion = criterion
 

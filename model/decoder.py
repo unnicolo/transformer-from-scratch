@@ -8,7 +8,7 @@ decoder.py: Implementation of a decoder module, as described in `The annotated t
 
 import torch.nn as nn
 from model.layers import LayerNorm, SublayerConnection
-from model.utils import clones
+from utils import clones
 
 class Decoder(nn.Module):
     """Decoder in the decoder stack consisting of `N` identical decoder modules."""

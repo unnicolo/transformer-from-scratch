@@ -8,7 +8,6 @@ transformer.py: Implementation of a vanilla transformer, as described in `The an
 
 import copy
 import numpy as np
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 

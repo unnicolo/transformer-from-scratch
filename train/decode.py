@@ -6,7 +6,7 @@
 import torch
 
 from model.transformer import Transformer
-from model.utils import subsequent_mask
+from utils import subsequent_mask
 
 ### CONSTANTS ###
 
@@ -17,7 +17,7 @@ def greedy_decode(model: Transformer, src, src_mask, max_len, start_symbol):
         out = model.decode(memory, src_mask, ys, subsequent_mask(ys.size(1)).type_as(src))
         probabilities = model.generator(out[:, -1])
         _, next_word = torch.max(probabilities, dim=1)
-        next_word = next_word.data[0]
+        next_word = next_word.item()
         ys = torch.cat([ys, torch.zeros(1, 1).fill_(next_word).type_as(src)], dim=1)
     
     return ys
