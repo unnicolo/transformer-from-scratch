@@ -23,6 +23,7 @@ transformer-from-scratch/
 ├── data/
 │   ├── __init__.py           
 │   ├── batch.py               # Holds a batch training data
+│   ├── tokenizer.py           # Handles loading SpaCy tokenizers and basic text
 │   ├── synthetic_data.py      # Generation of synthetic training data
 |
 ├── models/
