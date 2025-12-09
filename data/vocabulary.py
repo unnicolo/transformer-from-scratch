@@ -6,55 +6,52 @@ vocabulary.py: Build an load vocabulary.
 
 ### IMPORTS ###
 
+from datasets import load_dataset
+from os.path import exists
 from spacy import Language, Vocab
 from tokenizer import tokenize, yield_tokens
-import torchtext.datasets as datasets
+import torch
 from torchtext.vocab import build_vocab_from_iterator, Vocab
+
+from tokenizer import load_tokenizers
 
 ### CONSTANTS ###
 SPECIAL_TOKENS = ["<s>", "</s>", "<blank>", "<unk>"] 
+VOCAB_FILENAME = "vocab.pt"
+MULTI30K_IDENTIFIER = "WMT/multi30k"
 
 def build_vocabulary(spacy_de: Language, spacy_en: Language) -> tuple[Vocab, Vocab]:
-    def tokenize_de(text: str) -> list[str]:
-        """Tokenizes a German text string using the preloaded German spaCy model.
-
-        This function is a wrapper around `tokenize` that automatically uses
-        the German spaCy tokenizer `spacy_de`.
-
-        Args:
-            text: The input German string to tokenize.
-
-        Returns:
-            A list of token strings extracted from the input text.
-        """
-        return tokenize(text, spacy_de)
+    """Build German and English vocabularies using the HuggingFace Multi30k dataset.
     
-    def tokenize_en(text: str) -> list[str]:
-        """Tokenizes an English text string using the preloaded English spaCy model.
+    Args:
+        spacy_de: A loaded SpaCy language model for German tokenization.
+        spacy_en: A loaded SpaCY language model for English tokenization.
 
-        This function is a wrapper around `tokenize` that automatically uses
-        the English spaCy tokenizer `spacy_en`.
+    Returns:
+        tuple:
+            - ``vocab_sry``: TorchText vocabulary for German text.
+            - ``vocab_tgt``: TorchText vocabulary for English text.
 
-        Args:
-            text: The input English string to tokenize.
+    """
+    print("Loading Multi30k ...")
+    
+    ds_train = load_dataset("bentrevett/multi30k", split="train")
+    ds_val   = load_dataset("bentrevett/multi30k", split="validation")
+    ds_test  = load_dataset("bentrevett/multi30k", split="test")
 
-        Returns:
-            A list of token strings extracted from the input text.
-        """
-        return tokenize(text, spacy_en)
 
     print("Building German Vocabulary ...")
-    train, val, test = datasets.Multi30k(language_pair=("de", "en"))
     vocab_src = build_vocab_from_iterator(
-        yield_tokens(train + val + test, tokenize_de, index=0),
-        min_feq=2,
+        yield_tokens(list(ds_train["de"]) + list(ds_val["de"]) + list(ds_test["de"]), 
+                     lambda t: tokenize(t, spacy_de)),
+        min_freq=2,
         specials=SPECIAL_TOKENS,
     )
 
     print("Building English Vocabulary ...")
-    train, val, test = datasets.Multi30k(language_pair=("de", "en"))
     vocab_tgt = build_vocab_from_iterator(
-        yield_tokens(train + val + test, tokenize_en, index=1),
+        yield_tokens(list(ds_train["en"]) + list(ds_val["en"]) + list(ds_test["en"]), 
+                     lambda t: tokenize(t, spacy_en)),
         min_freq=2,
         specials=SPECIAL_TOKENS,
     )
@@ -64,5 +61,31 @@ def build_vocabulary(spacy_de: Language, spacy_en: Language) -> tuple[Vocab, Voc
 
     return vocab_src, vocab_tgt
 
+def load_vocab(spacy_de: Language, spacy_en: Language) -> tuple[Vocab, Vocab]:
+    """
+    Load or build source/target vocabularies for the German–English Transformer.
+
+    Args:
+        spacy_de: A loaded SpaCy language model for German tokenization.
+        spacy_en: A loaded SpaCy language model for English tokenization.
+
+    Returns:
+        tuple:
+            vocab_src: The TorchText vocabulary object for German tokens.
+            vocab_tgt: The TorchText vocabulary object for English tokens.
+    """
+    if not exists(VOCAB_FILENAME):
+        vocab_src, vocab_tgt = build_vocab_from_iterator(spacy_de, spacy_en)
+        torch.save((vocab_src, vocab_tgt), VOCAB_FILENAME)
+    else:
+        vocab_src, vocab_tgt = torch.load(VOCAB_FILENAME)
+
+    print("Finished.\nVocabulary sizes:")
+    print(len(vocab_src))
+    print(len(vocab_tgt))
+    
+    return vocab_src, vocab_tgt
+
 if __name__=='__main__':
-    build_vocabulary
+   spacy_de, spacy_en = load_tokenizers()
+   vocab_src, vocab_tgt = build_vocabulary(spacy_de, spacy_en) 

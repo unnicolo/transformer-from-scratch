@@ -16,7 +16,7 @@ SPACY_DE_PACKAGE_NAME = "de_core_news_sm"
 SPACY_EN_PACKAGE_NAME = "en_core_web_sm"
 
 def load_tokenizers() -> tuple[Language, Language]:
-    """Load the tokenizers for the german core news and english core web packages.
+    """Load the german core news and english core web tokenizers.
     
     Args:
         No arguments. 
@@ -26,14 +26,14 @@ def load_tokenizers() -> tuple[Language, Language]:
     """
     # Try to load the german core news package
     try:
-        spacy.load(SPACY_DE_PACKAGE_NAME)
+        spacy_de = spacy.load(SPACY_DE_PACKAGE_NAME)
     except IOError:
         os.system("python -m spacy download " + SPACY_DE_PACKAGE_NAME)
         spacy_de = spacy.load(SPACY_DE_PACKAGE_NAME)
     
     # Try to load the english core news package
     try:
-        spacy.load(SPACY_EN_PACKAGE_NAME)
+        spacy_en = spacy.load(SPACY_EN_PACKAGE_NAME)
     except IOError:
         os.system("python -m spacy download " + SPACY_EN_PACKAGE_NAME)
         spacy_en = spacy.load(SPACY_EN_PACKAGE_NAME)
@@ -53,8 +53,7 @@ def tokenize(text: str, tokenizer: Language) -> list[str]:
 
 def yield_tokens(
         data_iter: Iterable[tuple], 
-        tokenizer: Callable[[str], list[str]], 
-        index: int) -> Iterator[list[str]]:
+        tokenize_fn: Callable[[str], list[str]]) -> Iterator[list[str]]:
     """Yields tokenized text from an iterable of record tuples.
 
     Each element of `data_iter` is expected to be a tuple containing multiple
@@ -71,5 +70,5 @@ def yield_tokens(
         A list of token strings corresponding to the tokenized text field
         from each record.
     """ 
-    for from_to_tuple in data_iter:
-        yield tokenizer(from_to_tuple[index])
+    for example in data_iter:
+        yield tokenize_fn(example)
