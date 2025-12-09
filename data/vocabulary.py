@@ -89,3 +89,5 @@ def load_vocab(spacy_de: Language, spacy_en: Language) -> tuple[Vocab, Vocab]:
 if __name__=='__main__':
    spacy_de, spacy_en = load_tokenizers()
    vocab_src, vocab_tgt = build_vocabulary(spacy_de, spacy_en) 
+   print(len(vocab_src))
+   print(len(vocab_tgt))
