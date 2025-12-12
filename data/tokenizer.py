@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-tokenizer.py: # Handle loading SpaCy tokenizers and basic text → token list conversion.
+tokenizer.py: Handle loading HuggingFace pretrained tokenizers.
 """
 
 ### IMPORTS ###
