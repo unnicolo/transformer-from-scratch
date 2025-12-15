@@ -10,6 +10,7 @@ import copy
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
+from typing import Self
 
 from model.attention import MultiHeadAttention
 from model.decoder import DecoderLayer, Decoder
@@ -57,6 +58,27 @@ class Transformer(nn.Module):
         self.encoder = Encoder(EncoderLayer(c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
         self.decoder = Decoder(DecoderLayer(c(attn), c(attn), c(ff), d_model, dropout), NUM_ENCODER_DECODER_BLOCKS)
         self.generator = Generator(d_model, tgt_vocab)
+
+    @classmethod
+    def make_model(
+        cls: Self,
+        src_vocab,     
+        tgt_vocab,     
+        N=6, 
+        d_model=512, 
+        d_ff=2048,     
+        h=8, 
+        dropout=0.1
+    ) -> Self:
+        model = Transformer(d_model, d_ff, h, dropout, src_vocab, tgt_vocab)
+
+        # This was important from their code.
+        # Initialize parameters with Glorot / fan_avg.
+        for p in model.parameters():
+            if p.dim() > 1:
+                nn.init.xavier_uniform_(p)
+
+        return model
 
     def forward(self, src, tgt, src_mask, tgt_mask):
         """Push the inputs through the entire encoder and decoder stack.

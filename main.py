@@ -12,13 +12,14 @@ from torch.optim.lr_scheduler import LambdaLR
 from data.synthetic_data import generate_data
 
 from model.transformer import Transformer
-from utils import subsequent_mask, DummyScheduler, DummyOptimizer
 
 from train.decode import greedy_decode
 from train.label_smoothing import LabelSmoothing
 from train.loss import SimpleLossCompute
 from train.rate import rate
-from train.train import run_epoch
+from train.train import run_epoch, load_trained_model
+
+from utils import subsequent_mask, DummyScheduler, DummyOptimizer
 
 ### CONSTANTS ###
 BATCH_SIZE_TRAIN = 80
@@ -126,4 +127,5 @@ def run_example_simple_model():
     example_simple_model()
 
 if __name__ == '__main__':
-    run_example_simple_model()
+    #run_example_simple_model()
+    model = load_trained_model()
